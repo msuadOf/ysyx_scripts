@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export MAX_THREAD=2 #`nproc`
 echo "cpu:"  $MAX_THREAD

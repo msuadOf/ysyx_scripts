@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-CURRENT_Dir=$(cd `dirname $0`; pwd)
-PARENT_Dir=$(cd $(dirname $0);cd ..; pwd)
+export CURRENT_Dir=$(cd `dirname $0`; pwd)
+export PARENT_Dir=$(cd $(dirname $0);cd ..; pwd)
 echo "CURRENT_Dir = "$CURRENT_Dir
 echo "PARENT_Dir = "$PARENT_Dir
 

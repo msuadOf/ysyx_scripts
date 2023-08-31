@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 sh ./util_proxy_env.sh
 
@@ -20,50 +20,57 @@ sudo apt-get install vim -y
 sudo apt-get install tmux -y
 
 
-#<h2>install verilator </h2>
-cd ~
-sudo apt-get install git perl python3 make autoconf g++ flex bison ccache -y
-sudo apt-get install libgoogle-perftools-dev numactl perl-doc -y
-sudo apt-get install libfl2 -y # Ubuntu only (ignore if gives error)
-sudo apt-get install libfl-dev -y # Ubuntu only (ignore if gives error)
-sudo apt-get install zlibc zlib1g zlib1g-dev -y # Ubuntu only (ignore if gives error)
-sudo apt install help2man -y
-git clone https://github.com/verilator/verilator.git verilator ### Only first time
-# Every time you need to build:
-unset VERILATOR_ROOT # For bash
-cd verilator
-git pull # Make sure git repository is up-to-date
-#git tag # See what versions exist
+verilator --version
+if [ $? -eq 0 ] ; then
+  echo "verilator have installed" 
+else
+    # install verilator v5.008 
+    #<h2>install verilator </h2>
+    cd ~
+    sudo apt-get install git perl python3 make autoconf g++ flex bison ccache -y
+    sudo apt-get install libgoogle-perftools-dev numactl perl-doc -y
+    sudo apt-get install libfl2 -y # Ubuntu only (ignore if gives error)
+    sudo apt-get install libfl-dev -y # Ubuntu only (ignore if gives error)
+    sudo apt-get install zlibc zlib1g zlib1g-dev -y # Ubuntu only (ignore if gives error)
+    sudo apt install help2man -y
+    git clone https://github.com/verilator/verilator.git verilator ### Only first time
+    # Every time you need to build:
+    unset VERILATOR_ROOT # For bash
+    cd verilator
+    git pull # Make sure git repository is up-to-date
+    #git tag # See what versions exist
 
-#git checkout master # Use development branch (e.g. recent bug fixes)
+    #git checkout master # Use development branch (e.g. recent bug fixes)
 
-#git checkout stable # Use most recent stable release
+    #git checkout stable # Use most recent stable release
 
-git checkout v5.008 # Switch to specified release version
+    git checkout v5.008 # Switch to specified release version
 
-# 创建分区路径
-sudo mkdir -p /var/cache/swap/
-# 设置分区的大小
-# bs=64M是块大小，count=64是块数量，所以swap空间大小是bs*count=32GB
-sudo dd if=/dev/zero of=/var/cache/swap/swap0 bs=64M count=512
-# 设置该目录权限
-sudo chmod 0600 /var/cache/swap/swap0
-# 创建SWAP文件
-sudo mkswap /var/cache/swap/swap0
-# 激活SWAP文件
-sudo swapon /var/cache/swap/swap0
-# 查看SWAP信息是否正确
-sudo swapon -s
+    # 创建分区路径
+    sudo mkdir -p /var/cache/swap/
+    # 设置分区的大小
+    # bs=64M是块大小，count=64是块数量，所以swap空间大小是bs*count=32GB
+    sudo dd if=/dev/zero of=/var/cache/swap/swap0 bs=64M count=512
+    # 设置该目录权限
+    sudo chmod 0600 /var/cache/swap/swap0
+    # 创建SWAP文件
+    sudo mkswap /var/cache/swap/swap0
+    # 激活SWAP文件
+    sudo swapon /var/cache/swap/swap0
+    # 查看SWAP信息是否正确
+    sudo swapon -s
 
-autoconf # Create ./configure script
-./configure # Configure and create Makefile
-sudo make -j ${MAX_THREAD} # Build Verilator itself (if error, try just 'make')
-sudo make install -j ${MAX_THREAD}
+    autoconf # Create ./configure script
+    ./configure # Configure and create Makefile
+    sudo make -j ${MAX_THREAD} # Build Verilator itself (if error, try just 'make')
+    sudo make install -j ${MAX_THREAD}
 
-#释放swap空间
-sudo swapoff /var/cache/swap/swap0
-sudo rm /var/cache/swap/swap0
-sudo swapoff -a
+    #释放swap空间
+    sudo swapoff /var/cache/swap/swap0
+    sudo rm /var/cache/swap/swap0
+    sudo swapoff -a
+
+fi
 
 #配置vim语法高亮
 cp /etc/vim/vimrc ~/.vimrc
@@ -115,6 +122,6 @@ echo -e 'bind-key c new-window -c "#{pane_current_path}" '> .tmux.conf
 echo -e 'bind-key % split-window -h -c "#{pane_current_path}"'>> .tmux.conf
 echo -e "bind-key '\"' split-window -c \"#{pane_current_path}\" ">> .tmux.conf
 
-
+cd ~
 wget https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.0/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
 tar -xf clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz

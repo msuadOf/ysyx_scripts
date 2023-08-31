@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ysyx_stage="PA0"
 PROXY_SRC=./utils/util_proxy_env.sh
 
