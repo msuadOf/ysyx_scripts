@@ -1,0 +1,12 @@
+chmod +x ./*.sh
+
+chmod +x ./utils/*.sh
+
+./utils/git_push.sh
+
+NVBoard初始化(在workbench)
+sudo apt-get install libsdl2-dev libsdl2-image-dev -y
+
+src=`pwd`
+export NVBOARD_HOME=`pwd`/nvboard
+echo $NVBOARD_HOME

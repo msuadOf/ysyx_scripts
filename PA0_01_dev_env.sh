@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sh ./util_env.sh
+sh ./util_proxy_env.sh
 
 sudo apt update
 sudo apt-get install -y build-essential    # build-essential packages, include binary utilities, gcc, make, and so on
@@ -18,10 +18,6 @@ sudo apt-get install vim -y
 
 #tmux
 sudo apt-get install tmux -y
-
-#<h1>get code</h1>
-cd ~
-git clone -b master git@github.com:OSCPU/ysyx-workbench.git ysyx-workbench
 
 
 #<h2>install verilator </h2>
@@ -117,4 +113,8 @@ apt-get install tmux -y
 cd ~
 echo -e 'bind-key c new-window -c "#{pane_current_path}" '> .tmux.conf
 echo -e 'bind-key % split-window -h -c "#{pane_current_path}"'>> .tmux.conf
-echo -e "bind-key '\"' split-window -c \"#{pane_current_path}\" ">> .tmux.conf 
+echo -e "bind-key '\"' split-window -c \"#{pane_current_path}\" ">> .tmux.conf
+
+
+wget https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.0/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+tar -xf clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
