@@ -13,7 +13,7 @@ echo "CURRENT_Dir = "$CURRENT_Dir
 echo "PARENT_Dir = "$PARENT_Dir
 
 cd $CURRENT_Dir
-# sh ./PA0_01_dev_env.sh  
+bash ./PA0_01_dev_env.sh  
 
 cd $PARENT_Dir
 
@@ -30,4 +30,4 @@ source ~/.bashrc
 echo $NEMU_HOME
 echo $AM_HOME
 
-sudo apt install bison flex -y
+sudo dnf install bison flex -y

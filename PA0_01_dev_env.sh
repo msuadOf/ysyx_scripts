@@ -3,24 +3,24 @@
 source util_proxy_env.sh
 echo $http_proxy
 
-sudo apt update
-sudo apt-get install -y build-essential    # build-essential packages, include binary utilities, gcc, make, and so on
-sudo apt-get install -y man                # on-line reference manual
-sudo apt-get install -y gcc-doc            # on-line reference manual for gcc
-sudo apt-get install -y gdb                # GNU debugger
-sudo apt-get install -y git                # revision control system
-sudo apt-get install -y libreadline-dev    # a library used later
-sudo apt-get install -y libsdl2-dev        # a library used later
-# sudo apt-get install -y llvm llvm-dev      # llvm project, which contains libraries used later
-# sudo apt-get install -y llvm-11 llvm-11-dev # only for ubuntu20.04
-sudo apt-get remove -y llvm llvm-dev      # llvm project, which contains libraries used later
-sudo apt-get remove -y llvm-11 llvm-11-dev # only for ubuntu20.04
+sudo dnf update
+sudo dnf install -y build-essential    # build-essential packages, include binary utilities, gcc, make, and so on
+sudo dnf install -y man                # on-line reference manual
+sudo dnf install -y gcc-doc            # on-line reference manual for gcc
+sudo dnf install -y gdb                # GNU debugger
+sudo dnf install -y git                # revision control system
+sudo dnf install -y libreadline-dev    # a library used later
+sudo dnf install -y libsdl2-dev        # a library used later
+# sudo dnf install -y llvm llvm-dev      # llvm project, which contains libraries used later
+# sudo dnf install -y llvm-11 llvm-11-dev # only for ubuntu20.04
+sudo dnf remove -y llvm llvm-dev      # llvm project, which contains libraries used later
+sudo dnf remove -y llvm-11 llvm-11-dev # only for ubuntu20.04
 
 #vim
-sudo apt-get install vim -y
+sudo dnf install vim -y
 
 #tmux
-sudo apt-get install tmux -y
+sudo dnf install tmux -y
 
 
 verilator --version
@@ -30,12 +30,12 @@ else
     # install verilator v5.008 
     #<h2>install verilator </h2>
     cd ~
-    sudo apt-get install git perl python3 make autoconf g++ flex bison ccache -y
-    sudo apt-get install libgoogle-perftools-dev numactl perl-doc -y
-    sudo apt-get install libfl2 -y # Ubuntu only (ignore if gives error)
-    sudo apt-get install libfl-dev -y # Ubuntu only (ignore if gives error)
-    sudo apt-get install zlibc zlib1g zlib1g-dev -y # Ubuntu only (ignore if gives error)
-    sudo apt install help2man -y
+    sudo dnf install git perl python3 make autoconf g++ flex bison ccache -y
+    sudo dnf install libgoogle-perftools-dev numactl perl-doc -y
+    sudo dnf install libfl2 -y # Ubuntu only (ignore if gives error)
+    sudo dnf install libfl-dev -y # Ubuntu only (ignore if gives error)
+    sudo dnf install zlibc zlib1g zlib1g-dev -y # Ubuntu only (ignore if gives error)
+    sudo dnf install help2man -y
     git clone https://github.com/verilator/verilator.git verilator ### Only first time
     # Every time you need to build:
     unset VERILATOR_ROOT # For bash
@@ -49,18 +49,18 @@ else
 
     git checkout v5.008 # Switch to specified release version
 
-    # ´´½¨·ÖÇøÂ·¾¶
+    # åˆ›å»ºåˆ†åŒºè·¯å¾„
     sudo mkdir -p /var/cache/swap/
-    # ÉèÖÃ·ÖÇøµÄ´óĞ¡
-    # bs=64MÊÇ¿é´óĞ¡£¬count=64ÊÇ¿éÊıÁ¿£¬ËùÒÔswap¿Õ¼ä´óĞ¡ÊÇbs*count=32GB
+    # è®¾ç½®åˆ†åŒºçš„å¤§å°
+    # bs=64Mæ˜¯å—å¤§å°ï¼Œcount=64æ˜¯å—æ•°é‡ï¼Œæ‰€ä»¥swapç©ºé—´å¤§å°æ˜¯bs*count=32GB
     sudo dd if=/dev/zero of=/var/cache/swap/swap0 bs=64M count=512
-    # ÉèÖÃ¸ÃÄ¿Â¼È¨ÏŞ
+    # è®¾ç½®è¯¥ç›®å½•æƒé™
     sudo chmod 0600 /var/cache/swap/swap0
-    # ´´½¨SWAPÎÄ¼ş
+    # åˆ›å»ºSWAPæ–‡ä»¶
     sudo mkswap /var/cache/swap/swap0
-    # ¼¤»îSWAPÎÄ¼ş
+    # æ¿€æ´»SWAPæ–‡ä»¶
     sudo swapon /var/cache/swap/swap0
-    # ²é¿´SWAPĞÅÏ¢ÊÇ·ñÕıÈ·
+    # æŸ¥çœ‹SWAPä¿¡æ¯æ˜¯å¦æ­£ç¡®
     sudo swapon -s
 
     autoconf # Create ./configure script
@@ -68,14 +68,14 @@ else
     sudo make -j ${MAX_THREAD} # Build Verilator itself (if error, try just 'make')
     sudo make install -j ${MAX_THREAD}
 
-    #ÊÍ·Åswap¿Õ¼ä
+    #é‡Šæ”¾swapç©ºé—´
     sudo swapoff /var/cache/swap/swap0
     sudo rm /var/cache/swap/swap0
     sudo swapoff -a
 
 fi
 
-#ÅäÖÃvimÓï·¨¸ßÁÁ
+#é…ç½®vimè¯­æ³•é«˜äº®
 # cp /etc/vim/vimrc ~/.vimrc
 # cd ~
 # ls -a
@@ -89,39 +89,39 @@ fi
 # set hidden
 # set autowrite" >> .vimrc
 
-# echo 'setlocal noswapfile " ²»ÒªÉú³ÉswapÎÄ¼ş
-# set bufhidden=hide " µ±buffer±»¶ªÆúµÄÊ±ºòÒş²ØËü
-# colorscheme evening " Éè¶¨ÅäÉ«·½°¸
-# set number " ÏÔÊ¾ĞĞºÅ
-# set cursorline " Í»³öÏÔÊ¾µ±Ç°ĞĞ
-# set ruler " ´ò¿ª×´Ì¬À¸±ê³ß
-# set shiftwidth=2 " Éè¶¨ << ºÍ >> ÃüÁîÒÆ¶¯Ê±µÄ¿í¶ÈÎª 2
-# set softtabstop=2 " Ê¹µÃ°´ÍË¸ñ¼üÊ±¿ÉÒÔÒ»´ÎÉ¾µô 2 ¸ö¿Õ¸ñ
-# set tabstop=2 " Éè¶¨ tab ³¤¶ÈÎª 2
-# set nobackup " ¸²¸ÇÎÄ¼şÊ±²»±¸·İ
-# set autochdir " ×Ô¶¯ÇĞ»»µ±Ç°Ä¿Â¼Îªµ±Ç°ÎÄ¼şËùÔÚµÄÄ¿Â¼
-# set backupcopy=yes " ÉèÖÃ±¸·İÊ±µÄĞĞÎªÎª¸²¸Ç
-# set hlsearch " ËÑË÷Ê±¸ßÁÁÏÔÊ¾±»ÕÒµ½µÄÎÄ±¾
-# set noerrorbells " ¹Ø±Õ´íÎóĞÅÏ¢ÏìÁå
-# set novisualbell " ¹Ø±ÕÊ¹ÓÃ¿ÉÊÓÏìÁå´úÌæºô½Ğ
-# set t_vb= " ÖÃ¿Õ´íÎóÁåÉùµÄÖÕ¶Ë´úÂë
-# set matchtime=2 " ¶ÌÔİÌø×ªµ½Æ¥ÅäÀ¨ºÅµÄÊ±¼ä
-# set magic " ÉèÖÃÄ§Êõ
-# set smartindent " ¿ªÆôĞÂĞĞÊ±Ê¹ÓÃÖÇÄÜ×Ô¶¯Ëõ½ø
-# set backspace=indent,eol,start " ²»Éè¶¨ÔÚ²åÈë×´Ì¬ÎŞ·¨ÓÃÍË¸ñ¼üºÍ Delete ¼üÉ¾³ı»Ø³µ·û
-# set cmdheight=1 " Éè¶¨ÃüÁîĞĞµÄĞĞÊıÎª 1
-# set laststatus=2 " ÏÔÊ¾×´Ì¬À¸ (Ä¬ÈÏÖµÎª 1, ÎŞ·¨ÏÔÊ¾×´Ì¬À¸)
-# set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ Ln\ %l,\ Col\ %c/%L%) " ÉèÖÃÔÚ×´Ì¬ĞĞÏÔÊ¾µÄĞÅÏ¢
-# set foldenable " ¿ªÊ¼ÕÛµş
-# set foldmethod=syntax " ÉèÖÃÓï·¨ÕÛµş
-# set foldcolumn=0 " ÉèÖÃÕÛµşÇøÓòµÄ¿í¶È
-# setlocal foldlevel=1 " ÉèÖÃÕÛµş²ãÊıÎª 1
-# nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR> " ÓÃ¿Õ¸ñ¼üÀ´¿ª¹ØÕÛµş' >> .vimrc
+# echo 'setlocal noswapfile " ä¸è¦ç”Ÿæˆswapæ–‡ä»¶
+# set bufhidden=hide " å½“bufferè¢«ä¸¢å¼ƒçš„æ—¶å€™éšè—å®ƒ
+# colorscheme evening " è®¾å®šé…è‰²æ–¹æ¡ˆ
+# set number " æ˜¾ç¤ºè¡Œå·
+# set cursorline " çªå‡ºæ˜¾ç¤ºå½“å‰è¡Œ
+# set ruler " æ‰“å¼€çŠ¶æ€æ æ ‡å°º
+# set shiftwidth=2 " è®¾å®š << å’Œ >> å‘½ä»¤ç§»åŠ¨æ—¶çš„å®½åº¦ä¸º 2
+# set softtabstop=2 " ä½¿å¾—æŒ‰é€€æ ¼é”®æ—¶å¯ä»¥ä¸€æ¬¡åˆ æ‰ 2 ä¸ªç©ºæ ¼
+# set tabstop=2 " è®¾å®š tab é•¿åº¦ä¸º 2
+# set nobackup " è¦†ç›–æ–‡ä»¶æ—¶ä¸å¤‡ä»½
+# set autochdir " è‡ªåŠ¨åˆ‡æ¢å½“å‰ç›®å½•ä¸ºå½“å‰æ–‡ä»¶æ‰€åœ¨çš„ç›®å½•
+# set backupcopy=yes " è®¾ç½®å¤‡ä»½æ—¶çš„è¡Œä¸ºä¸ºè¦†ç›–
+# set hlsearch " æœç´¢æ—¶é«˜äº®æ˜¾ç¤ºè¢«æ‰¾åˆ°çš„æ–‡æœ¬
+# set noerrorbells " å…³é—­é”™è¯¯ä¿¡æ¯å“é“ƒ
+# set novisualbell " å…³é—­ä½¿ç”¨å¯è§†å“é“ƒä»£æ›¿å‘¼å«
+# set t_vb= " ç½®ç©ºé”™è¯¯é“ƒå£°çš„ç»ˆç«¯ä»£ç 
+# set matchtime=2 " çŸ­æš‚è·³è½¬åˆ°åŒ¹é…æ‹¬å·çš„æ—¶é—´
+# set magic " è®¾ç½®é­”æœ¯
+# set smartindent " å¼€å¯æ–°è¡Œæ—¶ä½¿ç”¨æ™ºèƒ½è‡ªåŠ¨ç¼©è¿›
+# set backspace=indent,eol,start " ä¸è®¾å®šåœ¨æ’å…¥çŠ¶æ€æ— æ³•ç”¨é€€æ ¼é”®å’Œ Delete é”®åˆ é™¤å›è½¦ç¬¦
+# set cmdheight=1 " è®¾å®šå‘½ä»¤è¡Œçš„è¡Œæ•°ä¸º 1
+# set laststatus=2 " æ˜¾ç¤ºçŠ¶æ€æ  (é»˜è®¤å€¼ä¸º 1, æ— æ³•æ˜¾ç¤ºçŠ¶æ€æ )
+# set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ Ln\ %l,\ Col\ %c/%L%) " è®¾ç½®åœ¨çŠ¶æ€è¡Œæ˜¾ç¤ºçš„ä¿¡æ¯
+# set foldenable " å¼€å§‹æŠ˜å 
+# set foldmethod=syntax " è®¾ç½®è¯­æ³•æŠ˜å 
+# set foldcolumn=0 " è®¾ç½®æŠ˜å åŒºåŸŸçš„å®½åº¦
+# setlocal foldlevel=1 " è®¾ç½®æŠ˜å å±‚æ•°ä¸º 1
+# nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR> " ç”¨ç©ºæ ¼é”®æ¥å¼€å…³æŠ˜å ' >> .vimrc
 
 #tmux
 echo ""
 echo "install tumx"
-sudo apt-get install tmux -y
+sudo dnf install tmux -y
 cd ~
 echo -e 'bind-key c new-window -c "#{pane_current_path}" '> .tmux.conf
 echo -e 'bind-key % split-window -h -c "#{pane_current_path}"'>> .tmux.conf
