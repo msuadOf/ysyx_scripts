@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#proxy
+export HOSTIP=$(cat /etc/resolv.conf | grep "nameserver" | cut -f 2 -d " ")
+export http_proxy="http://$HOSTIP:7890"
+export https_proxy="http://$HOSTIP:7890"
+export all_proxy="socks5://$HOSTIP:7890"
+export ALL_PROXY="socks5://$HOSTIP:7890"
+
 export CURRENT_Dir=$(cd `dirname $0`; pwd)
 export PARENT_Dir=$(cd $(dirname $0);cd ..; pwd)
 echo "CURRENT_Dir = "$CURRENT_Dir
@@ -16,6 +23,7 @@ git config --global user.name "msuad"
 
 bash init.sh nemu
 bash init.sh abstract-machine
+bash init.sh nvboard
 
 source ~/.bashrc
 

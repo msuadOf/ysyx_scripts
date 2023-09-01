@@ -8,4 +8,6 @@
 
 - 多平台迁移（Ubuntu xx.xx）
 
+- 请使用bash运行！（使用dash会造成代理相关变量失效，无法正常挂上代理）
+
   Have Fun!
