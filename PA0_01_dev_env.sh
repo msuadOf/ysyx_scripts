@@ -4,17 +4,15 @@ source util_proxy_env.sh
 echo $http_proxy
 
 sudo dnf update
-sudo dnf install -y build-essential    # build-essential packages, include binary utilities, gcc, make, and so on
-sudo dnf install -y man                # on-line reference manual
-sudo dnf install -y gcc-doc            # on-line reference manual for gcc
+sudo dnf groupinstall "Development Tools" -y    # build-essential packages, include binary utilities, gcc, make, and so on
+#sudo dnf install -y gcc-doc           #cant be used # on-line reference manual for gcc
 sudo dnf install -y gdb                # GNU debugger
-sudo dnf install -y git                # revision control system
-sudo dnf install -y libreadline-dev    # a library used later
-sudo dnf install -y libsdl2-dev        # a library used later
-# sudo dnf install -y llvm llvm-dev      # llvm project, which contains libraries used later
+#sudo dnf install -y git                # revision control system
+sudo dnf install -y readline-devel SDL2-devel    # a library used later
+sudo dnf install -y llvm llvm-devel      # llvm project, which contains libraries used later
 # sudo dnf install -y llvm-11 llvm-11-dev # only for ubuntu20.04
-sudo dnf remove -y llvm llvm-dev      # llvm project, which contains libraries used later
-sudo dnf remove -y llvm-11 llvm-11-dev # only for ubuntu20.04
+# sudo dnf remove -y llvm llvm-dev      # llvm project, which contains libraries used later
+# sudo dnf remove -y llvm-11 llvm-11-dev # only for ubuntu20.04
 
 #vim
 sudo dnf install vim -y
@@ -31,10 +29,10 @@ else
     #<h2>install verilator </h2>
     cd ~
     sudo dnf install git perl python3 make autoconf g++ flex bison ccache -y
-    sudo dnf install libgoogle-perftools-dev numactl perl-doc -y
+    sudo dnf install google-perftools-devel numactl perl-doc -y
     sudo dnf install libfl2 -y # Ubuntu only (ignore if gives error)
-    sudo dnf install libfl-dev -y # Ubuntu only (ignore if gives error)
-    sudo dnf install zlibc zlib1g zlib1g-dev -y # Ubuntu only (ignore if gives error)
+    sudo dnf install libfl-devel -y # Ubuntu only (ignore if gives error)
+    sudo dnf install zlibc zlib1g zlib1g-devel -y # Ubuntu only (ignore if gives error)
     sudo dnf install help2man -y
     git clone https://github.com/verilator/verilator.git verilator ### Only first time
     # Every time you need to build:
@@ -126,39 +124,3 @@ cd ~
 echo -e 'bind-key c new-window -c "#{pane_current_path}" '> .tmux.conf
 echo -e 'bind-key % split-window -h -c "#{pane_current_path}"'>> .tmux.conf
 echo -e "bind-key '\"' split-window -c \"#{pane_current_path}\" ">> .tmux.conf
-
-#llvm
-echo ""
-echo "install llvm"
-cd ~
-ls /usr/local/llvm-13.0.1 && llvm-as --version
-if [ $? -ne 0 ] ; then
-
-    sudo mkdir -p /usr/local
-    sudo rm -f clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz*
-    wget https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.1/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz
-    tar xvf clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz
-    if [ $? -eq 0 ] ; then
-      echo "llvm have download" 
-
-      sudo mv ~/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04 /usr/local/llvm-13.0.1
-      export PATH="$PATH:/usr/local/llvm-13.0.1/bin"
-    
-      function addenv() {
-        echo 'export PATH="$PATH:/usr/local/llvm-13.0.1/bin"' >> ~/.bashrc
-        source ~/.bashrc
-        echo "By default this script will add environment variables into ~/.bashrc."
-        echo "After that, please run 'source ~/.bashrc' to let these variables take effect."
-        echo "If you use shell other than bash, please add these environment variables manually."
-      }
-
-      llvm-as --version
-      if [ $? -ne 0 ] ; then
-          addenv
-      fi
-    fi
-else 
-    echo "llvm 13.0.1 is installed"
-    llvm-as --version
-fi
-
